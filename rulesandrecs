@@ -1,0 +1,27 @@
+#RULES and RECS 
+
+Rules
+#FIO42-C. Close files when they are no longer needed
+#FIO46-C. Do not access a closed file
+#ERR50-CPP. Do not abruptly terminate the program
+#ERR51-CPP. Handle all exceptions
+#ERR55-CPP. Honor exception specifications
+#ERR56-CPP. Guarantee exception safety
+#ERR34-C. Detect errors when converting a string to a number
+#FIO47-C. Use valid format strings
+#FIO38-C. Do not copy a FILE object
+#ERR33-C. Detect and handle standard library errors
+#ERR53-CPP. Do not reference base classes or class data members in a constructor or destructor function-try-block handler
+
+
+
+
+Recs
+#FIO01-C. Be careful using functions that use file names for identification
+#FIO06-C. Create files with appropriate access permissions
+#FIO24-C. Do not open a file that is already open
+#FIO15-C. Ensure that file operations are performed in a secure directory
+
+
+
+

@@ -1,0 +1,6 @@
+table 1: Users
+ID (primary, increment), username (unique), password hash, password salt
+
+
+table 2: Messages
+ID (primary, increment), From Username, To Username, Encrypted Message

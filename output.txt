@@ -1,0 +1,176 @@
+main.cpp: In function ‘int main(int, char**)’:
+main.cpp:21:13: error: ‘cout’ was not declared in this scope
+             cout << "Log in or Create Account?" << endl;
+             ^
+main.cpp:26:28: error: passing ‘volatile string {aka volatile std::basic_string<char>}’ as ‘this’ argument of ‘void std::basic_string<_CharT, _Traits, _Alloc>::clear() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ discards qualifiers [-fpermissive]
+             password.clear();
+                            ^
+main.cpp:27:28: error: type ‘volatile string {aka volatile class std::basic_string<char>}’ argument given to ‘delete’, expected pointer
+             delete(password);
+                            ^
+main.cpp:28:22: error: ambiguous overload for ‘operator=’ (operand types are ‘volatile string {aka volatile std::basic_string<char>}’ and ‘long int’)
+             password = NULL;
+                      ^
+main.cpp:28:22: note: candidates are:
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/random:41,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:65,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from /usr/include/c++/4.8/regex:38,
+                 from main.cpp:4:
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const _CharT* __s) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(_CharT __c) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(std::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+main.cpp:29:13: error: ‘cout’ was not declared in this scope
+             cout << "Argument Error: " << e.what() << endl;
+             ^
+main.cpp:32:28: error: passing ‘volatile string {aka volatile std::basic_string<char>}’ as ‘this’ argument of ‘void std::basic_string<_CharT, _Traits, _Alloc>::clear() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ discards qualifiers [-fpermissive]
+             password.clear();
+                            ^
+main.cpp:33:28: error: type ‘volatile string {aka volatile class std::basic_string<char>}’ argument given to ‘delete’, expected pointer
+             delete(password);
+                            ^
+main.cpp:34:22: error: ambiguous overload for ‘operator=’ (operand types are ‘volatile string {aka volatile std::basic_string<char>}’ and ‘long int’)
+             password = NULL;
+                      ^
+main.cpp:34:22: note: candidates are:
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/random:41,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:65,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from /usr/include/c++/4.8/regex:38,
+                 from main.cpp:4:
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const _CharT* __s) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(_CharT __c) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(std::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+main.cpp:35:13: error: ‘cout’ was not declared in this scope
+             cout << "Memory Error: " << e.what() << endl;
+             ^
+main.cpp:38:28: error: passing ‘volatile string {aka volatile std::basic_string<char>}’ as ‘this’ argument of ‘void std::basic_string<_CharT, _Traits, _Alloc>::clear() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ discards qualifiers [-fpermissive]
+             password.clear();
+                            ^
+main.cpp:39:28: error: type ‘volatile string {aka volatile class std::basic_string<char>}’ argument given to ‘delete’, expected pointer
+             delete(password);
+                            ^
+main.cpp:40:22: error: ambiguous overload for ‘operator=’ (operand types are ‘volatile string {aka volatile std::basic_string<char>}’ and ‘long int’)
+             password = NULL;
+                      ^
+main.cpp:40:22: note: candidates are:
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/random:41,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:65,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from /usr/include/c++/4.8/regex:38,
+                 from main.cpp:4:
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const _CharT* __s) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(_CharT __c) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(std::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+main.cpp:41:13: error: ‘cout’ was not declared in this scope
+             cout << "Runtime Error: " << e.what() << endl;
+             ^
+main.cpp:44:28: error: passing ‘volatile string {aka volatile std::basic_string<char>}’ as ‘this’ argument of ‘void std::basic_string<_CharT, _Traits, _Alloc>::clear() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ discards qualifiers [-fpermissive]
+             password.clear();
+                            ^
+main.cpp:45:28: error: type ‘volatile string {aka volatile class std::basic_string<char>}’ argument given to ‘delete’, expected pointer
+             delete(password);
+                            ^
+main.cpp:46:22: error: ambiguous overload for ‘operator=’ (operand types are ‘volatile string {aka volatile std::basic_string<char>}’ and ‘long int’)
+             password = NULL;
+                      ^
+main.cpp:46:22: note: candidates are:
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/random:41,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:65,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from /usr/include/c++/4.8/regex:38,
+                 from main.cpp:4:
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const _CharT* __s) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(_CharT __c) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(std::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+main.cpp:47:13: error: ‘cout’ was not declared in this scope
+             cout << "Other Error: " << e.what() << endl;
+             ^
+main.cpp:50:24: error: passing ‘volatile string {aka volatile std::basic_string<char>}’ as ‘this’ argument of ‘void std::basic_string<_CharT, _Traits, _Alloc>::clear() [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>]’ discards qualifiers [-fpermissive]
+         password.clear();
+                        ^
+main.cpp:51:24: error: type ‘volatile string {aka volatile class std::basic_string<char>}’ argument given to ‘delete’, expected pointer
+         delete(password);
+                        ^
+main.cpp:52:18: error: ambiguous overload for ‘operator=’ (operand types are ‘volatile string {aka volatile std::basic_string<char>}’ and ‘long int’)
+         password = NULL;
+                  ^
+main.cpp:52:18: note: candidates are:
+In file included from /usr/include/c++/4.8/string:52:0,
+                 from /usr/include/c++/4.8/random:41,
+                 from /usr/include/c++/4.8/bits/stl_algo.h:65,
+                 from /usr/include/c++/4.8/algorithm:62,
+                 from /usr/include/c++/4.8/regex:38,
+                 from main.cpp:4:
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const std::basic_string<_CharT, _Traits, _Alloc>&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const basic_string& __str) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:546:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(const _CharT*) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(const _CharT* __s) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:554:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(_CharT) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(_CharT __c) 
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:565:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note: std::basic_string<_CharT, _Traits, _Alloc>& std::basic_string<_CharT, _Traits, _Alloc>::operator=(std::basic_string<_CharT, _Traits, _Alloc>&&) [with _CharT = char; _Traits = std::char_traits<char>; _Alloc = std::allocator<char>] <near match>
+       operator=(basic_string&& __str)
+       ^
+/usr/include/c++/4.8/bits/basic_string.h:580:7: note:   no known conversion for implicit ‘this’ parameter from ‘volatile string* {aka volatile std::basic_string<char>*}’ to ‘std::basic_string<char>*’
