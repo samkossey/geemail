@@ -8,7 +8,7 @@
 
 using namespace std;
 
-string create_stream (string hash, string nonce, string message) {
+unsigned char* create_stream (string hash, string nonce, int messageLength) {
     gcry_error_t     gcryError;
     gcry_cipher_hd_t gcryCipherHd;
     size_t           index;
@@ -50,7 +50,7 @@ string create_stream (string hash, string nonce, string message) {
     }
     printf("gcry_cipher_setiv worked\n");
     
-    size_t txtLength = message.length();
+    size_t txtLength = messageLength;
     char * encBuffer = (char*)malloc(txtLength);
     char * textBuffer = (char*)malloc(txtLength);
     memset(textBuffer, 0, txtLength);
@@ -74,17 +74,11 @@ string create_stream (string hash, string nonce, string message) {
     char stream[txtLength * 2];
     int currIndex = 0;
     for (index = 0; index<txtLength-1; index++){
-        // char b[2];
-        // snprintf(b, 3, "%02X", (unsigned char)encBuffer[index]);
-        // stream[currIndex] = b[0];
-        // stream[currIndex + 1] = b[1];
-        // currIndex = currIndex + 2;
         sprintf(stream+index*2, "%02X", (unsigned char)encBuffer[index]);
-        //printf("\n");
     }
         //sprintf("%02X", (unsigned char)encBuffer[index]);
         
-    
+    cout << (string) stream << endl;
     //TODO: bitwise xor the stream with the text
     
     //const char* a = "hi";
@@ -93,26 +87,60 @@ string create_stream (string hash, string nonce, string message) {
     //const char* b = (const char*)encBuffer;
     //unsigned char test = b ^ a;
     //cout <<  test << endl;
-    //return encBuffer;
-    return string(stream);
+    return (unsigned char*)encBuffer;
+    //return string(stream);
 }
 
 string encrypt (string hash, string nonce, string message) {
-    string keystream = create_stream(hash, nonce, message);
-    return keystream;
+    unsigned char* keystream = create_stream(hash, nonce, message.length());
+    const char* messageBytes = message.c_str();
+    unsigned char* outputBuffer = (unsigned char*)malloc(sizeof(string)*message.length());
+    for(int i=0; i < message.length(); i++){
+        //cout << "messageBytes[i] " << messageBytes[i] << endl;
+        //cout << "keystream[i] " << keystream[i] << endl;
+        outputBuffer[i]=messageBytes[i]^keystream[i];
+        //cout << "outputBuffer[i] " << outputBuffer[i] << endl;
+    }
+    char stream[message.length() * 2];
+    for (int index = 0; index<message.length(); index++){
+        cout << "OUTPUT FOR INDEX " << (unsigned char)outputBuffer[index] << endl;
+        sprintf(stream+index*2, "%02X", (unsigned char)outputBuffer[index]);
+    }
+    return (string) stream;
     
 }
 
-string decrypt (string hash, string nonce, string message) {
-    string keystream = create_stream(hash, nonce, message);
-    return keystream;
+string decrypt (string hash, string nonce, string encryption) {
+    unsigned char* keystream = create_stream(hash, nonce, encryption.length()/2);
+    const char* encryptedBytes = encryption.c_str();
+    unsigned char* preXOR = (unsigned char*)malloc(sizeof(string)*encryption.length()/2);
+    for (int k = 0; k < encryption.length() /2; k++){
+        char enc = encryptedBytes[k] + encryptedBytes[k+1];
+        preXOR[k] = (enc >= 'A')? (enc - 'A' + 10): (enc - '0');
+    }
+    
+    char* outputBuffer = (char*)malloc(sizeof(string)*encryption.length()/2);
+    
+    for(int i=0; i < encryption.length()/2; i++){
+        //cout << "encryptedBytes[i] " << encryptedBytes[i] << endl;
+        //cout << "keystream[i] " << keystream[i] << endl;
+        outputBuffer[i]=preXOR[i]^keystream[i];
+        //cout << "outputBuffer[i] " << outputBuffer[i] << endl;
+    }
+    // char stream[encryption.length()];
+    // for (int index = 0; index<encryption.length()/2; index++){
+    //     sprintf(stream+index*2, "%02X", (unsigned char)outputBuffer[index]);
+    // }
+    return (string) outputBuffer;
 }
 
 int main(){
-    string a = "hello";
+    string a = "ab";
     string b = "hellohel";
     string c = "12345678901234567890123456789012";
-    cout << encrypt(c, b, a) << endl;
+    cout << "encrypted text: " << encrypt(c, b, a) << endl;
+    string encrypted = encrypt(c,b,a);
+    cout << "decryption " << decrypt(c,b,encrypted) << endl;
     //cout << encrypt()
     return 0;
 }

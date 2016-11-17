@@ -4,7 +4,7 @@
 #include <stdlib.h>
 using namespace std;
 
-string hash(string input){
+string hashIt(string input){
     char hash[65] = "";
     size_t index;
     size_t txtLength = input.length();
@@ -25,6 +25,11 @@ string hash(string input){
         sprintf(hash+index*2, "%02X", (unsigned char)hashBuffer[index]);
     //printf("\n");
     return (string) hash;
+}
+
+string newSalt(){
+    //TODO: Make this actually have a salt...
+    return "00000000";
 }
 
 // string hash (const char* pw, size_t txtLength) {

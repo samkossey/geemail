@@ -3,10 +3,13 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <unistd.h>
 
-#include "hashing.cpp"
+// #ifndef HASHING_CPP
+// #include "hashing.cpp"
+// #endif
 
-#define MAX_DIGEST_LENGTH=256
+#define MAX_DIGEST_LENGTH 256
 
 using namespace std;
 
@@ -31,13 +34,14 @@ int getch() {
 
 string getpass(const char *prompt, bool show_asterisk=true)
 {
+  //usleep(2000000);
   const char BACKSPACE=127;
   const char RETURN=10;
 
   string password;
   unsigned char ch=0;
 
-  cout <<prompt<<endl;
+  cout <<prompt;
 
   while((ch=getch())!=RETURN)
     {
@@ -61,16 +65,20 @@ string getpass(const char *prompt, bool show_asterisk=true)
   return password;
 }
 
-bool verifyPassword(string password, unsigned char* hash, unsigned char* salt){
-  unsigned char* newHash = hash(password, salt);
-  return memcmp(newHash, hash, MAX_DIGEST_LENGTH)
-}
+// bool verifyPassword(string password, unsigned char* hash, unsigned char* salt){
+//   unsigned char* newHash = (string) hash(password, salt);
+//   return memcmp(newHash, hash, MAX_DIGEST_LENGTH)
+// }
 
-bool authenticateUser(string Username){
-  unsigned char* recordedHash=getPasswordHash(Username);
-  string password=getpass("Please enter your password: ",true); // Show asterisks
-  return verifyPassword(password, recordedHash)
-}
+// bool authenticateUser(string Username){
+//   unsigned char* recordedHash=getPasswordHash(Username);
+//   string password=getpass("Please enter your password: ",true); // Show asterisks
+//   return verifyPassword(password, recordedHash)
+// }
+
+// bool login(){
+  
+// }
 
 
 int main2()

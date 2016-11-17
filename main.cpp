@@ -9,6 +9,9 @@
 
 //#include "dbhandler.cpp"
 #include "secure_functions.cpp"
+#include "authentication.cpp"
+#include "hashing.cpp"
+#include "dbHandler.cpp"
 
 using namespace std;
 
@@ -16,16 +19,64 @@ using namespace std;
 int main(int argc, char **argv){
     if (argc == 1){
         try{
-            string Option;
-            string Username;
-            secure_string Password;
+            bool loggedin = false;
+            string Option = "";
+            string Username = "";
+            string password = "";
+            string PasswordHash = "";
+            string salt = "";
+            //secure_string Password;
+            while(!loggedin){
+                cout << "Username: ";
+                cin >> Username;
+                cin.get();
+                //Username = "hi";
+                //fseek(stdin,0,SEEK_END);
+                if(userExists(Username)){
+                    password=getpass("Password: ",true);
+                    salt = getSalt(Username);
+                    PasswordHash = hashIt(password+salt);
+                    if(getPassword(Username) == PasswordHash){
+                        loggedin = true;
+                    } else {
+                        cout << "Invalid Password" << endl;
+                    }
+                } else {
+                    cout << "User doesn't exist, Creating account..." << endl;
+                    password=getpass("New Password: ",true);
+                    if(password == getpass("Verify Password: ",true)){
+                        cout << "Creating user..." << endl;
+                        salt=newSalt();
+                        createUser(Username,hashIt(password+salt),salt);
+                        cout << "User Created Successfully, Please login" << endl;
+                    } else {
+                        cout << "Passwords didn't match, please try again" << endl;
+                    }
+                }
+            }
             
+            bool done = false;
+            string action = "";
+            cout << endl << endl;
+            system("clear");
+            cout << "=========================================" << endl;
+            cout << "           Welcome to GEE-MAIL!" << endl;
+            cout << "=========================================" << endl;
+            while(!done){
+                cout << "You have " << getMessageCount(Username) << " message(s)." << endl;
+                cin >> action;
+            }
             
-            cout << "Log in or Create Account?" << endl;
+            //out << "Log in or Create Account?" << endl;
             
-            cout << "Username: " << endl;
-            Password.set("test");
-            cout << Password.get() << endl;
+            // cout << "Username: ";
+            // cin >> Username;
+            // if userExists(Username)
+            // password=getpass("Password: ",true);
+            // PasswordHash = hashIt(password)
+            
+            //Password.set("test");
+            //out << Password.get() << endl;
             //Password->string_ = "Passw0rd";
             //cout << "Password: " << Password->get() << endl;
             
