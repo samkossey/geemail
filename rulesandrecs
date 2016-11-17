@@ -12,7 +12,7 @@ Rules
 #FIO38-C. Do not copy a FILE object
 #ERR33-C. Detect and handle standard library errors
 #ERR53-CPP. Do not reference base classes or class data members in a constructor or destructor function-try-block handler
-
+#ERR58-CPP. Handle all exceptions thrown before main() begins executing
 
 
 
@@ -21,7 +21,11 @@ Recs
 #FIO06-C. Create files with appropriate access permissions
 #FIO24-C. Do not open a file that is already open
 #FIO15-C. Ensure that file operations are performed in a secure directory
-
+FIO05-C. Identify files using multiple file attributes
+ERR00-C. Adopt and implement a consistent and comprehensive error-handling policy
+ERR04-C. Choose an appropriate termination strategy
+ERR05-C. Application-independent code should provide error detection without dictating error handling
+ERR07-C. Prefer functions that support error checking over equivalent functions that don't
 
 
 
