@@ -2,16 +2,19 @@
 #include <gcrypt.h>
 #include <iostream>
 #include <bitset>
+#include <string.h>
+
 #include "hashing.cpp"
+
 using namespace std;
 
-void encrypt (string pw) {
+string encrypt (string hash, string nonce, string message) {
     gcry_error_t     gcryError;
     gcry_cipher_hd_t gcryCipherHd;
     size_t           index;
     
-    const char * salsaKey = hash(pw, pw.length()); // 32 bytes
-    const char * iniVector = "public?"; // 8 bytes
+    const char * salsaKey = hash.c_str(); // 32 bytes
+    const char * iniVector = nonce.c_str(); // 8 bytes
 
     gcryError = gcry_cipher_open(
         &gcryCipherHd, // gcry_cipher_hd_t *
@@ -47,8 +50,8 @@ void encrypt (string pw) {
     }
     printf("gcry_cipher_setiv worked\n");
     
-    size_t txtLength = 101;
-    //char * encBuffer = (char*)malloc(txtLength);
+    size_t txtLength = message.length();
+    char * encBuffer = (char*)malloc(txtLength);
     char * textBuffer = (char*)malloc(txtLength);
     memset(textBuffer, 0, 101);
 
@@ -68,6 +71,7 @@ void encrypt (string pw) {
     printf("gcry_cipher_decrypt worked\n");
     
     printf("encBuffer = ");
+    const char a
     for (index = 0; index<txtLength-1; index++)
         printf("%02X", (unsigned char)encBuffer[index]);
     printf("\n");

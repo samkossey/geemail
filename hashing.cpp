@@ -27,11 +27,13 @@ string hash (const char* pw, size_t txtLength) {
         a[currIndex + 1] = b[1];
         currIndex = currIndex + 2;
     }
-    string c = a;
-    return c;
+    //string c = a;
+    return (string) a;
 }
 
 //int main(){
 //     cout << hash("sam", 3) << endl;
 //     return 0;
 // }
+
+

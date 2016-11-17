@@ -1,8 +1,9 @@
+#include <stdio.h>
+#include <string.h>
 
-
-class message(){
+class message{
     public:
-    string To;
-    string From;
-    unsigned char* Message;
+    std::string To;
+    std::string From;
+    std::string Message;
 };
