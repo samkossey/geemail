@@ -32,6 +32,14 @@ string newSalt(){
     return "00000000";
 }
 
+string hashFor(string password, string salt, int rounds){
+    string hash = "0";
+    for(int i=0; i < rounds; i++){
+        hash = hashIt(hash+password+salt);
+    }
+    return hash;
+}
+
 // string hash (const char* pw, size_t txtLength) {
 //     size_t index;
 //     char * hashBuffer = (char *)malloc(33);

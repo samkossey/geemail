@@ -23,75 +23,66 @@ struct B{
     vector<string> s;
 };
 
-
+//callback for inserts
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
    int i;
-   for(i=0; i<argc; i++){
-      //printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
-   }
-   //printf("\n");
    return 0;
 }
 
+//callback for a recent message
 static int callbackRM(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     A *tableData = (A *)data ;
     tableData->b = argv[argc - 1];
     return 0;
 }
 
+//callback to return string val
 static int callbackString(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     A *tableData = (A *)data ;
     for(i=0; i<argc; i++){
-        //printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
         tableData->b = argv[i];
     }
-    //printf("\n");
     return 0;
 }
 
+//callback to return a vector
 static int callbackVector(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     B *vData = (B *)data ;
     for(i=0; i<argc; i++){
-        //printf("%s = %s\n", azColName[i], argv[i] ? argv[i] : "NULL");
         vData->s.push_back(argv[i]);
     }
-    //printf("\n");
     return 0;
 }
 
+//callback to return an int
 static int callbackInt(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     A *numberHolder = (A *)data ;
     numberHolder->c = argc;
-    //printf("\n");
     return 0;
 }
 
+//callback for a select count(*)...
 static int callbackCount(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     A *numberHolder = (A *)data ;
     numberHolder->c = stoi(argv[0]);
-    //printf("\n");
     return 0;
 }
 
+//call back when checking for the existence of the db/tables
 static int callbackTE(void *data, int argc, char **argv, char **azColName){
     int i;
-    //fprintf(stderr, "%s: ", (const char*)data);
     A *numberHolder = (A *)data ;
     int j = stoi(argv[0]);
     numberHolder->c = j;
     return 0;
 }
 
+//check if the table/db already exist and if not, create them
 void tablesExist(){
     sqlite3* db;
     char *zErrMsg = 0;
@@ -102,6 +93,7 @@ void tablesExist(){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    //check for users table
     string sql = "select count(*) from sqlite_master where type='table' and name='" + string(UsersTable) +"';";
     rc = sqlite3_exec(db, sql.c_str(), callbackTE, &numberHolder, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -109,6 +101,7 @@ void tablesExist(){
       sqlite3_free(zErrMsg);
       throw runtime_error("Error in checking for user table");
     }
+    //if the table did not exist create it
     if (numberHolder.c == 0){
         sql = "create table users( ID integer primary key autoincrement, UserName varchar, ";
         sql += "Password varchar, Salt varchar);";
@@ -119,7 +112,7 @@ void tablesExist(){
       throw runtime_error("Error in creating user table");
     }
     }
-    
+    //check for the existence of the messages table
     sql = "select count(*) from sqlite_master where type='table' and name='" + string(MessagesTable) +"';";
     rc = sqlite3_exec(db, sql.c_str(), callbackTE, &numberHolder, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -127,7 +120,7 @@ void tablesExist(){
       sqlite3_free(zErrMsg);
       throw runtime_error("Error in checking for messages table");
     }
-    
+    //if it did not exist, create it
     if (numberHolder.c == 0){
         sql = "create table messages( MID integer primary key autoincrement, FRM varchar, ";
         sql += "TOM varchar, Message text, Salt varchar);";
@@ -141,6 +134,7 @@ void tablesExist(){
     sqlite3_close(db);
 }
 
+//check if a user exists in the db
 bool userExists(string UserName){
     tablesExist();
     sqlite3* db;
@@ -159,23 +153,22 @@ bool userExists(string UserName){
       sqlite3_free(zErrMsg);
       throw runtime_error("Error in checking if a user exists");
     }
-    // }else{
-    //   fprintf(stdout, "Welcome!\n");
-    // }
     sqlite3_close(db);
+    //means user did not exist
     if (numberHolder.c == 0){
         return false;
     }
+    //means user did exist
     else return true;
 }
 
+//creates a user
 void createUser(string Username, string Password, string Salt){
     tablesExist();
     sqlite3* db;
     char *zErrMsg = 0;
     int rc;
     string data = "Callback function called";
-    //string* test;
     rc = sqlite3_open("geemail.db", &db);
     if( rc ){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -193,6 +186,7 @@ void createUser(string Username, string Password, string Salt){
     sqlite3_close(db);
 }
 
+//gets a vector of all the users in the db
 vector<string> getUsers(){
     tablesExist();
     sqlite3* db;
@@ -215,6 +209,7 @@ vector<string> getUsers(){
     return vData.s;
 }
 
+//gets the hashed pw of a username
 string getPassword(string Username){
     tablesExist();
     sqlite3* db;
@@ -237,6 +232,7 @@ string getPassword(string Username){
     return tableData.b;
 }
 
+//gets the salt of a username
 string getSalt(string Username){
     tablesExist();
     sqlite3* db;
@@ -259,6 +255,7 @@ string getSalt(string Username){
     return tableData.b;
 }
 
+//gets the number of messages in a user's inbox
 int getMessageCount(string UserName){
     tablesExist();
     sqlite3* db;
@@ -281,13 +278,13 @@ int getMessageCount(string UserName){
     return numberHolder.c;
 }
 
+//sends a message (inserts it into messages table)
 void sendMessage(message message){
     tablesExist();
     sqlite3* db;
     char *zErrMsg = 0;
     int rc;
     string data = "Callback function called";
-    //string* test;
     rc = sqlite3_open("geemail.db", &db);
     if( rc ){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
@@ -304,6 +301,7 @@ void sendMessage(message message){
     sqlite3_close(db);
 }
 
+//returns a vector of users who have sent the given username a message
 vector<string> messagesFrom(string myusername){
     tablesExist();
     sqlite3* db;
@@ -327,6 +325,7 @@ vector<string> messagesFrom(string myusername){
     return vData.s;
 }
 
+//gets the most recent message from a given user to your username
 string getRecentMessage(string myusername, string from){
     tablesExist();
     sqlite3* db;
@@ -351,8 +350,6 @@ string getRecentMessage(string myusername, string from){
 }
 
 int maindb(){
-    //unsigned char hash[4]={0x00,0x10,0x20,0x30};
-    //cout << createUserString("Sam", hash, hash);
     cout << "message count " << getMessageCount("trevor") << endl;
     return 0;
 }

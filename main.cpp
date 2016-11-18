@@ -35,7 +35,7 @@ int main(int argc, char **argv){
                 if(userExists(Username)){
                     password=getpass("Password: ",true);
                     salt = getSalt(Username);
-                    PasswordHash = hashIt(password+salt);
+                    PasswordHash = hashFor(password, salt, 10000);
                     if(getPassword(Username) == PasswordHash){
                         loggedin = true;
                     } else {
@@ -47,7 +47,7 @@ int main(int argc, char **argv){
                     if(password == getpass("Verify Password: ",true)){
                         cout << "Creating user..." << endl;
                         salt=newSalt();
-                        createUser(Username,hashIt(password+salt),salt);
+                        createUser(Username,hashFor(password, salt, 10000),salt);
                         cout << "User Created Successfully, Please login" << endl;
                     } else {
                         cout << "Passwords didn't match, please try again" << endl;
@@ -58,13 +58,17 @@ int main(int argc, char **argv){
             bool done = false;
             string action = "";
             cout << endl << endl;
-            system("clear");
-            cout << "=========================================" << endl;
-            cout << "           Welcome to GEE-MAIL!" << endl;
-            cout << "=========================================" << endl;
             while(!done){
+                system("clear");
+                cout << endl;
+                cout << "=========================================" << endl;
+                cout << "           Welcome to GEE-MAIL!" << endl;
+                cout << "=========================================" << endl;
+                
                 cout << "You have " << getMessageCount(Username) << " message(s)." << endl;
-                cin >> action;
+                while(/*!isValidAction(action)*/true){
+                    cin >> action;
+                }
             }
             
             //out << "Log in or Create Account?" << endl;
