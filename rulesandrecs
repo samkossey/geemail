@@ -2,24 +2,39 @@
 
 Rules
 #ERR51-CPP. Handle all exceptions
+    # In main.cpp all the exceptions have been handled
 #ERR55-CPP. Honor exception specifications
+    #The exception specifications have been honored in main.cpp such that there is neither an implementation defined termination nor an abnormal termination
 #ERR56-CPP. Guarantee exception safety
+    #The exception safety has been guaranteed in main.cpp. The errors and exceptional situations have been handled properly.
 #ERR34-C. Detect errors when converting a string to a number
+    #In the file dbhandler.cpp, the error conditions have been detected and addressed when the function pertaining to the same is called.
 #FIO47-C. Use valid format strings
+    #Valid format strings like fprintf have been used in dbhandler.cpp
 #FIO38-C. Do not copy a FILE object
+    #The hash files include file objects. To prevent access violation, we haven't copied in file object. 
 #ERR33-C. Detect and handle standard library errors
+    #To prevent unexpected and undefined behaviour all errors have been detected and handled.
 #ERR53-CPP. Do not reference base classes or class data members in a constructor or destructor function-try-block handler
+
 #FIO42-C. Close files when they are no longer needed
+    #All the files are closed when they are no longer needed to ensure proper termination of the program.
 #FIO46-C. Do not access a closed file
+    #This is an undefined behaviour. We are not accessing any file that is closed.
 #ERR50-CPP. Do not abruptly terminate the program
+    #It can lead to an indeterminate state of the files, so the function calls have been made explicitly and the programs have not been terminated abruptly.
 
 
 
 Recs
 #FIO01-C. Be careful using functions that use file names for identification
+    #Files have been accessed through file descriptors and file pointers wherever possible
 #FIO06-C. Create files with appropriate access permissions
+    #Creating a file with insufficiently restrictive access permissions may allow an unprivileged user to access that file. We have ensured flags for the same.
 #FIO24-C. Do not open a file that is already open
+    #Opening a file that is already open has implementation-defined behavior. Multiple copies of the same file opened at a given time leads to the same.
 #FIO15-C. Ensure that file operations are performed in a secure directory
+    #The secret directory is the dbhandler which no one other than the user or administrator has ability to create, rename, delete or manipulate.
 
 
 
