@@ -222,6 +222,9 @@ int main(int argc, char **argv){
         } catch (exception const &e){
             cout << "Other Error: " << e.what() << endl;
             return 4;
+        } catch (...){
+            cout << "Unknown Error has Occured" << endl;
+            return 5;
         }
     }
     return 0;

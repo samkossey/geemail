@@ -63,19 +63,20 @@ unsigned char* create_stream (string hash, string nonce, int messageLength) {
         0);            // unsigned int
     if (gcryError)
     {
-        printf("gcry_cipher_open failed:  %s/%s\n",
-               gcry_strsource(gcryError),
-               gcry_strerror(gcryError));
-        //return 0;
+        // printf("gcry_cipher_open failed:  %s/%s\n",
+        //       gcry_strsource(gcryError),
+        //       gcry_strerror(gcryError));
+        throw runtime_error("Internal Cipher Error: Cipher open failed/" + string(gcry_strsource(gcryError)) + "/" + string(gcry_strerror(gcryError)));
     }
     //printf("gcry_cipher_open worked\n");
     
     gcryError = gcry_cipher_setkey(gcryCipherHd, salsaKey, 32);
     if (gcryError)
     {
-        printf("gcry_cipher_setkey failed:  %s/%s\n",
-               gcry_strsource(gcryError),
-               gcry_strerror(gcryError));
+        // printf("gcry_cipher_setkey failed:  %s/%s\n",
+        //       gcry_strsource(gcryError),
+        //       gcry_strerror(gcryError));
+        throw runtime_error("Internal Cipher Error: setkey failed/" + string(gcry_strsource(gcryError)) + "/" + string(gcry_strerror(gcryError)));
         //return 0;
     }
     //printf("gcry_cipher_setkey worked\n");
@@ -83,9 +84,10 @@ unsigned char* create_stream (string hash, string nonce, int messageLength) {
     gcryError = gcry_cipher_setiv(gcryCipherHd, iniVector, 8);
     if (gcryError)
     {
-        printf("gcry_cipher_setiv failed:  %s/%s\n",
-               gcry_strsource(gcryError),
-               gcry_strerror(gcryError));
+        // printf("gcry_cipher_setiv failed:  %s/%s\n",
+        //       gcry_strsource(gcryError),
+        //       gcry_strerror(gcryError));
+        throw runtime_error("Internal Cipher Error: setiv failed/" + string(gcry_strsource(gcryError)) + "/" + string(gcry_strerror(gcryError)));
         //return 0;
     }
     //printf("gcry_cipher_setiv worked\n");
@@ -104,9 +106,10 @@ unsigned char* create_stream (string hash, string nonce, int messageLength) {
         txtLength);   // size_t
     if (gcryError)
     {
-        printf("gcry_cipher_decrypt failed:  %s/%s\n",
-               gcry_strsource(gcryError),
-               gcry_strerror(gcryError));
+        // printf("gcry_cipher_decrypt failed:  %s/%s\n",
+        //       gcry_strsource(gcryError),
+        //       gcry_strerror(gcryError));
+        throw runtime_error("Internal Cipher Error: decrypt failed/" + string(gcry_strsource(gcryError)) + "/" + string(gcry_strerror(gcryError)));
         //return 0;
     }
     //printf("gcry_cipher_decrypt worked\n");
@@ -199,14 +202,3 @@ int mainen(){
 
 
 
-/*
-char source_val[] = {'0','A','0','3','B','7'} // Represents the numbers 0x0A, 0x03 and 0xB7
- uint8 dest_val[3];                            // We want to save 3 numbers
- for(int i = 0; i<3; i++)
- {
-     sscanf(&source_val[i*2],"%x%x",&dest_val[i]); // Everytime we read two chars --> %x%x
- }
- // Now dest_val contains 0x0A, 0x03 and 0xB7
-
-
-*/
