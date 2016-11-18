@@ -6,4 +6,5 @@ class message{
     std::string To;
     std::string From;
     std::string Message;
+    std::string Salt;
 };

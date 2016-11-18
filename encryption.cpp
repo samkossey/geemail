@@ -100,6 +100,7 @@ unsigned char* create_stream (string hash, string nonce, int messageLength) {
         encBuffer,    // void *
         txtLength,    // size_t
         textBuffer,    // const void *
+        
         txtLength);   // size_t
     if (gcryError)
     {

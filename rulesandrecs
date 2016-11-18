@@ -1,46 +1,26 @@
 #RULES and RECS 
 
 Rules
-#FIO30-C. Exclude user input form format strings
-# termios?
-
-#FIO42-C. Close files when they are no longer needed
-# We have made sure that this rule is obeyed consistently in code.
-# for eg., for each opening of the database file geemail.db, a corresponding close command has been put in.
-
-#FIO46-C. Do not access a closed file
-# similar to the above rule, we have only accessed the database files after opening it.
-
-#ERR30-C. Set errno to zero before calling a library function known to set errno, and check errno only after function returns a value indicating failure.
-# In our dbHandler.cpp code, we have explicitly set the value of zErrMsg to zero before calling the corrsponding sqlite3 function. Also in accordance with this rule,
-we check the zErrMsg only afetr function returns the value indicating failure.
-
-#ERR50-CPP. Do not abruptly terminate the program
-# In our code we've consistently taken care of this rule. We have thrwon an exception for all cases and caught these exceptions.
-*In main.cpp we have ensured that different kinds of erros and exceptions are properly accounted for.
-
 #ERR51-CPP. Handle all exceptions
 #ERR55-CPP. Honor exception specifications
 #ERR56-CPP. Guarantee exception safety
 #ERR34-C. Detect errors when converting a string to a number
-
-
+#FIO47-C. Use valid format strings
+#FIO38-C. Do not copy a FILE object
 #ERR33-C. Detect and handle standard library errors
 #ERR53-CPP. Do not reference base classes or class data members in a constructor or destructor function-try-block handler
-
+#FIO42-C. Close files when they are no longer needed
+#FIO46-C. Do not access a closed file
+#ERR50-CPP. Do not abruptly terminate the program
 
 
 
 Recs
-#FIO01-C. Be careful using functions that use file names for identification. 
+#FIO01-C. Be careful using functions that use file names for identification
 #FIO06-C. Create files with appropriate access permissions
 #FIO24-C. Do not open a file that is already open
 #FIO15-C. Ensure that file operations are performed in a secure directory
-FIO05-C. Identify files using multiple file attributes
-ERR00-C. Adopt and implement a consistent and comprehensive error-handling policy
-ERR04-C. Choose an appropriate termination strategy
-ERR05-C. Application-independent code should provide error detection without dictating error handling
-ERR07-C. Prefer functions that support error checking over equivalent functions that don't
+
 
 
 

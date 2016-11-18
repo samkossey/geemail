@@ -17,11 +17,23 @@ using namespace std;
 struct A{
     string b;
     int c;
+    string salt;
 };
 
 struct B{
     vector<string> s;
 };
+
+string sanitize(string s){
+    string answer;
+    for (int i = 0; i < s.length(); i++){
+        answer += s.at(i);
+        if (s.at(i) == '\''){
+            answer += s.at(i);
+        }
+    }
+    return answer;
+}  
 
 //callback for inserts
 static int callback(void *NotUsed, int argc, char **argv, char **azColName){
@@ -34,6 +46,14 @@ static int callbackRM(void *data, int argc, char **argv, char **azColName){
     int i;
     A *tableData = (A *)data ;
     tableData->b = argv[argc - 1];
+    return 0;
+}
+
+//callback for a recent message
+static int callbackRMSalt(void *data, int argc, char **argv, char **azColName){
+    int i;
+    A *tableData = (A *)data ;
+    tableData->salt = argv[argc - 1];
     return 0;
 }
 
@@ -146,6 +166,7 @@ bool userExists(string UserName){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    UserName = sanitize(UserName);
     string sql = "select count(*) from " + string(UsersTable) +" where Username='" + UserName + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackCount, &numberHolder, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -174,6 +195,7 @@ void createUser(string Username, string Password, string Salt){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    Username = sanitize(Username);
     string sql = "insert into " + string(UsersTable) + " ('USERNAME', 'PASSWORD', 'SALT') values ('" + Username 
     + "', '" + Password + "', '" 
     + Salt + "');";
@@ -221,6 +243,7 @@ string getPassword(string Username){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    Username = sanitize(Username);
     string sql = "select password from " + string(UsersTable) +" where username='" + Username + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackString, &tableData, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -244,6 +267,7 @@ string getSalt(string Username){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    Username = sanitize(Username);
     string sql = "select salt from " + string(UsersTable) + " where username='" + Username + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackString, &tableData, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -267,6 +291,7 @@ int getMessageCount(string UserName){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    UserName = sanitize(UserName);
     string sql = "select count(*) from " + string(MessagesTable) + " where tom='" + UserName + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackCount, &numberHolder, &zErrMsg);
     if( rc != SQLITE_OK ){
@@ -290,8 +315,10 @@ void sendMessage(message message){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
-    string sql = "insert into " + string(MessagesTable) + "(TOM, FRM, Message) values ('" + message.To
-    + "', '" + message.From + "', " + message.Message + ");";
+    message.To = sanitize(message.To);
+    message.From = sanitize(message.From);
+    string sql = "insert into " + string(MessagesTable) + "(TOM, FRM, Message, Salt) values ('" + message.To;
+    sql += "', '" + message.From + "', '" + message.Message + "', '" + message.Salt + "');";
     rc = sqlite3_exec(db, sql.c_str(), callback, 0, &zErrMsg);
     if( rc != SQLITE_OK ){
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
@@ -313,6 +340,7 @@ vector<string> messagesFrom(string myusername){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    myusername = sanitize(myusername);
     string sql = "select Frm from " + string(MessagesTable) + " where ";
     sql += "Tom='" + myusername + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackVector, &vData, &zErrMsg);
@@ -326,7 +354,7 @@ vector<string> messagesFrom(string myusername){
 }
 
 //gets the most recent message from a given user to your username
-string getRecentMessage(string myusername, string from){
+message getRecentMessage(string myusername, string from){
     tablesExist();
     sqlite3* db;
     char *zErrMsg = 0;
@@ -337,16 +365,33 @@ string getRecentMessage(string myusername, string from){
         fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
         throw runtime_error("Can't Open Database");
     };
+    myusername = sanitize(myusername);
+    from = sanitize(from);
     string sql = "select message from " + string(MessagesTable) + " where Tom='" + myusername;
-    sql += "' AND Frm='" + from + "');";
+    sql += "' AND Frm='" + from + "';";
     rc = sqlite3_exec(db, sql.c_str(), callbackRM, &tableData, &zErrMsg);
     if( rc != SQLITE_OK ){
     fprintf(stderr, "SQL error: %s\n", zErrMsg);
       sqlite3_free(zErrMsg);
       throw runtime_error("Error getting the most recent message from the given user");
     }
+    string resultMes = tableData.b;
+    sql = "select salt from " + string(MessagesTable) + " where Tom='" + myusername;
+    sql += "' AND Frm='" + from + "';";
+    rc = sqlite3_exec(db, sql.c_str(), callbackRMSalt, &tableData, &zErrMsg);
+    if( rc != SQLITE_OK ){
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+      sqlite3_free(zErrMsg);
+      throw runtime_error("Error getting the salt from the given user");
+    }
+    string resultSalt = tableData.salt;
+    message finalMessage;
+    finalMessage.To = myusername;
+    finalMessage.From = from;
+    finalMessage.Message = resultMes;
+    finalMessage.Salt = resultSalt;
     sqlite3_close(db);
-    return tableData.b;
+    return finalMessage;
 }
 
 int maindb(){

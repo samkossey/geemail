@@ -10,20 +10,93 @@
 //#include "dbhandler.cpp"
 #include "secure_functions.cpp"
 #include "authentication.cpp"
-#include "hashing.cpp"
+//#include "hashing.cpp"
 #include "dbHandler.cpp"
+#include "encryption.cpp"
+//#include "message.cpp"
 
 using namespace std;
 
-bool isValidAction(string a){
+void drawMenu(string Username){
+    cout << endl << endl;
+    system("clear");
+    cout << endl;
+    cout << "=========================================" << endl;
+    cout << "           Welcome to GEE-MAIL!" << endl;
+    cout << "=========================================" << endl;
+    
+    cout << "You have " << getMessageCount(Username) << " message(s)." << endl;
+    cout << endl;
+    cout << "What would you like to do? " << endl;
+    cout << "(R)ead Messages, (S)end Message, (L)og out" << endl;
+}
+
+void sendAMessage(string Username){
+    message m;
+    m.From = Username;
+    cout << "To: ";
+    cin >> m.To;
+    cin.get();
+    string pw;
+    bool flag = false;
+    m.Salt = newSalt();
+    while (!flag){
+        pw = getpass("Password: ",true);
+        if (pw == getpass("Verify Password: ",true)){
+            pw = hashFor(pw, m.Salt, 100000);
+            flag = true;
+        }
+    }
+    cout << "Message: ";
+    cin >> m.Message;
+    m.Message = encrypt(pw, m.Salt, m.Message);
+    sendMessage(m);
+}
+
+
+void readAMessage(string Username){
+    vector<string> froms = messagesFrom(Username);
+    
+    
+    cout << "You have messages from: ";
+    for (int i = 0; i<froms.size(); i++){
+        cout << froms[i];
+        if(i!=froms.size()-1){
+            cout << ", ";
+        }
+    }
+    cout << endl << endl;
+    cout << "Who do you want to read a message from? ";
+    string user = "";
+    cin.get();
+    while(!(find(froms.begin(), froms.end(),user)!=froms.end())){
+        cin >> user;
+    }
+    message Mess = getRecentMessage(Username, user);
+    cin.get();
+    cin.get();
+    cin.get();
+    string password = getpass("Password: ",true);
+    string hash = hashFor(password, Mess.Salt,100000);
+    Mess.Message = decrypt(hash, Mess.Salt, Mess.Message);
+    cout << Mess.Message << endl;
+    
+    //vector<string> messagesFrom(string myusername){
+    //string getRecentMessage(string myusername, string from){
+}
+
+bool isValidAction(char a){
     switch(a){
-        case "r": return true;
-        case "s": return true;
-        case "l": return true;
+        case 'r': return true;
+        case 'R': return true;
+        case 's': return true;
+        case 'S': return true;
+        case 'l': return true;
+        case 'L': return true;
         default: return false;
     }
 }
-        
+
 
 int main(int argc, char **argv){
     if (argc == 1){
@@ -65,29 +138,35 @@ int main(int argc, char **argv){
             }
             
             bool done = false;
-            char action = '';
-            cout << endl << endl;
+            unsigned char action = 0;
+            drawMenu(Username);
             while(!done){
-                system("clear");
-                cout << endl;
-                cout << "=========================================" << endl;
-                cout << "           Welcome to GEE-MAIL!" << endl;
-                cout << "=========================================" << endl;
-                
-                cout << "You have " << getMessageCount(Username) << " message(s)." << endl;
-                cout << endl;
-                cout << "What would you like to do? "
-                cout << "(R)ead Messages, (S)end Message, (L)og out"
-                cin.get();
+                //cin.get();
+                unsigned char action = 0;
                 while(!isValidAction(action)){
-                    action=getch();
+                    //cin >> action;
+                    action = getch();
+                    //action=cin.get();
                 }
-                if(action=="R"|action=="r"){
-                    if(getMessageCount(Username)){
-                        
+                drawMenu(Username);
+                if(action=='R' || action=='r'){
+                    if(getMessageCount(Username)>0){
+                        readAMessage(Username);
+                    } else {
+                        cout << "Why are you trying to read messages you don't have?" << endl;
                     }
                 }
+                else if(action=='S'||action=='s'){
+                    sendAMessage(Username);
+                }
+                else if(action=='L'||action=='l'){
+                    done=true;
+                }
+                else {
+                    throw runtime_error("Somehow, You won... you beat logic itself");
+                }
             }
+            cout << "Good bye!" << endl;
             
             //out << "Log in or Create Account?" << endl;
             
