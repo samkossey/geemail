@@ -15,6 +15,15 @@
 
 using namespace std;
 
+bool isValidAction(string a){
+    switch(a){
+        case "r": return true;
+        case "s": return true;
+        case "l": return true;
+        default: return false;
+    }
+}
+        
 
 int main(int argc, char **argv){
     if (argc == 1){
@@ -35,7 +44,7 @@ int main(int argc, char **argv){
                 if(userExists(Username)){
                     password=getpass("Password: ",true);
                     salt = getSalt(Username);
-                    PasswordHash = hashFor(password, salt, 10000);
+                    PasswordHash = hashFor(password, salt, 100000);
                     if(getPassword(Username) == PasswordHash){
                         loggedin = true;
                     } else {
@@ -47,7 +56,7 @@ int main(int argc, char **argv){
                     if(password == getpass("Verify Password: ",true)){
                         cout << "Creating user..." << endl;
                         salt=newSalt();
-                        createUser(Username,hashFor(password, salt, 10000),salt);
+                        createUser(Username,hashFor(password, salt, 100000),salt);
                         cout << "User Created Successfully, Please login" << endl;
                     } else {
                         cout << "Passwords didn't match, please try again" << endl;
@@ -56,7 +65,7 @@ int main(int argc, char **argv){
             }
             
             bool done = false;
-            string action = "";
+            char action = '';
             cout << endl << endl;
             while(!done){
                 system("clear");
@@ -66,8 +75,17 @@ int main(int argc, char **argv){
                 cout << "=========================================" << endl;
                 
                 cout << "You have " << getMessageCount(Username) << " message(s)." << endl;
-                while(/*!isValidAction(action)*/true){
-                    cin >> action;
+                cout << endl;
+                cout << "What would you like to do? "
+                cout << "(R)ead Messages, (S)end Message, (L)og out"
+                cin.get();
+                while(!isValidAction(action)){
+                    action=getch();
+                }
+                if(action=="R"|action=="r"){
+                    if(getMessageCount(Username)){
+                        
+                    }
                 }
             }
             

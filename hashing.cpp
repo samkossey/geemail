@@ -2,6 +2,7 @@
 #include <gcrypt.h>
 #include <iostream>
 #include <stdlib.h>
+#include <time.h> 
 using namespace std;
 
 string hashIt(string input){
@@ -28,14 +29,21 @@ string hashIt(string input){
 }
 
 string newSalt(){
-    //TODO: Make this actually have a salt...
-    return "00000000";
+    srand(time(NULL));
+    string theString;
+    for (int i = 0; i < 8; i++){
+      int k = rand() % 94 + 32;
+      char j = static_cast<char>(k);
+      theString += j;
+    }
+    return theString;
 }
 
 string hashFor(string password, string salt, int rounds){
     string hash = "0";
     for(int i=0; i < rounds; i++){
         hash = hashIt(hash+password+salt);
+        //cout << "round: " << i << " hash: " << hash << endl;
     }
     return hash;
 }
