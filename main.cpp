@@ -48,9 +48,16 @@ void sendAMessage(string Username){
         }
     }
     cout << "Message: ";
-    cin >> m.Message;
+    getline(cin, m.Message);
     m.Message = encrypt(pw, m.Salt, m.Message);
     sendMessage(m);
+    cout << "Message Sent!" << endl;
+    unsigned char action = 0;
+    cout << "Press enter to return to main menu" << endl;
+    while(action != 10){
+        action = getch();
+    }
+    drawMenu(Username);
 }
 
 
@@ -60,26 +67,44 @@ void readAMessage(string Username){
     
     cout << "You have messages from: ";
     for (int i = 0; i<froms.size(); i++){
-        cout << froms[i];
-        if(i!=froms.size()-1){
-            cout << ", ";
+        if (froms[i] != ""){
+            cout << froms[i];
+            if(i!=froms.size()-1){
+                cout << ", ";
+            }
         }
     }
     cout << endl << endl;
-    cout << "Who do you want to read a message from? ";
+    cout << "Who do you want to read a message from? " << endl;
     string user = "";
-    cin.get();
+    //cin.get();
     while(!(find(froms.begin(), froms.end(),user)!=froms.end())){
         cin >> user;
+        //cin.get();
     }
+    char ch; //hey i think i had something that might've been working here
+            //I also fixed send a message so that it can be more than one word
+            //cin on its own didn't like the spaces...and it successfully
+            //decrypted too although even though it was just working now there are
+            //weird double enters ness for cin?? but before that the only thing
+            //that was bothering me was that the menu doesn't come back up after
+            //you send/read
+    //flush buffer
+    while ((ch = getchar()) != '\n' && ch != EOF);
     message Mess = getRecentMessage(Username, user);
-    cin.get();
-    cin.get();
-    cin.get();
+    //cin.get();
+    //cin.get();
+    //cin.get();
     string password = getpass("Password: ",true);
     string hash = hashFor(password, Mess.Salt,100000);
     Mess.Message = decrypt(hash, Mess.Salt, Mess.Message);
-    cout << Mess.Message << endl;
+    cout << "Message: " << Mess.Message << endl;
+    unsigned char action = 0;
+    cout << "Press enter to return to main menu" << endl;
+    while(action != 10){
+        action = getch();
+    }
+    drawMenu(Username);
     
     //vector<string> messagesFrom(string myusername){
     //string getRecentMessage(string myusername, string from){
@@ -141,6 +166,7 @@ int main(int argc, char **argv){
             unsigned char action = 0;
             drawMenu(Username);
             while(!done){
+                //drawMenu(Username);
                 //cin.get();
                 unsigned char action = 0;
                 while(!isValidAction(action)){

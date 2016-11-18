@@ -34,16 +34,18 @@ int getch() {
 
 string getpass(const char *prompt, bool show_asterisk=true)
 {
-  //usleep(2000000);
-  const char BACKSPACE=127;
-  const char RETURN=10;
+    //fflush(stdin);
+    //usleep(2000000);
+    const char BACKSPACE=127;
+    const char RETURN=10;
+    
+    string password;
+    unsigned char ch=0;
 
-  string password;
-  unsigned char ch=0;
-
-  cout <<prompt;
-
-  while((ch=getch())!=RETURN)
+    
+    cout <<prompt;
+    
+    while((ch=getch())!=RETURN)
     {
        if(ch==BACKSPACE)
          {
@@ -61,8 +63,8 @@ string getpass(const char *prompt, bool show_asterisk=true)
                  cout <<'*';
          }
     }
-  cout <<endl;
-  return password;
+    cout <<endl;
+    return password;
 }
 
 // bool verifyPassword(string password, unsigned char* hash, unsigned char* salt){

@@ -350,6 +350,8 @@ vector<string> messagesFrom(string myusername){
       throw runtime_error("Error in retreiving the user's inbox");
     }
     sqlite3_close(db);
+    sort( vData.s.begin(), vData.s.end() );
+    vData.s.erase( unique( vData.s.begin(), vData.s.end() ), vData.s.end() );
     return vData.s;
 }
 
