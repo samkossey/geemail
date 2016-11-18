@@ -76,9 +76,12 @@ void readAMessage(string Username){
     }
     cout << endl << endl;
     cout << "Who do you want to read a message from? " << endl;
+    cout << "User: ";
     string user = "";
     //cin.get();
+    cin >> user;
     while(!(find(froms.begin(), froms.end(),user)!=froms.end())){
+        cout << "Selected user has not sent you a message, please give a valid user: ";
         cin >> user;
         //cin.get();
     }

@@ -187,7 +187,7 @@ string decrypt (string hash, string nonce, string encryption) {
 int mainen(){
     string a = "hello this is a super secret message"; //message
     string b = "hellohel"; // salt/nonce
-    string c = "12345678901234567890123456789012"; // 
+    string c = "12345678901234567890123456789012"; //encryption key
     string encrypted = encrypt(c,b,a);
     cout << "encrypted text: " << encrypted << endl;
     cout << "decrypted text: " << decrypt(c,b,encrypted) << endl;

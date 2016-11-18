@@ -28,7 +28,7 @@ string hashIt(string input){
     return (string) hash;
 }
 
-string newSalt(){
+string newSalt(void){
     srand(time(NULL));
     string theString;
     for (int i = 0; i < 8; i++){

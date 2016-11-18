@@ -103,7 +103,7 @@ static int callbackTE(void *data, int argc, char **argv, char **azColName){
 }
 
 //check if the table/db already exist and if not, create them
-void tablesExist(){
+void tablesExist(void){
     sqlite3* db;
     char *zErrMsg = 0;
     int rc;
@@ -209,7 +209,7 @@ void createUser(string Username, string Password, string Salt){
 }
 
 //gets a vector of all the users in the db
-vector<string> getUsers(){
+vector<string> getUsers(void){
     tablesExist();
     sqlite3* db;
     char *zErrMsg = 0;
