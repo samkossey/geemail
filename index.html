@@ -42,17 +42,17 @@
          an implementation of SHA256. For every new user, a random salt was generated to use in the password hash, and this was
           stored in the database in plain text. For messaging, the usernames involved and random salts generated were stored
           in plain text. The messages were stored in the database in an encrpyted form. This was the result of XOR-ing the 
-          original message with a stream cipher generated based on a hashed password that the two users involved agree on. This
+          original message with a stream cipher generated based on a hashed password that the two users involved agreed on. This
           password is never stored in any form in the back-end. If the password is incorrect, XOR-ing the stream cipher generated from the incorrect
           password with the encrypted message will not produce the original message. But if it is right, a user can type in the password
-          for a message and decrpyt it so it can be read. Then, a user could respond to that message or write to a new user. For
+          for a message and decrypt it so it can be read. Then, a user could respond to that message or write to a new user. For
           higher security, users should use different passwords for different messages.</p>
 
 <h3>
 <a id="creating-pages-manually" class="anchor" href="#creating-pages-manually" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Security Considerations</h3>
 
 <p>The Input Output (FIO) and Error Handling (ERR) rules and recommendations were weighed in the design and programmatic stages of this project.
-          In secure coding review, code was evaluated by all SEI CERT C/C++ Coding Standards to determine its strengths and vulnerabilities.</p>
+          In secure coding review, code was judged based on all SEI CERT C/C++ Coding Standards to determine its strengths and vulnerabilities.</p>
 
 <h3>
 <a id="authors-and-contributors" class="anchor" href="#authors-and-contributors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contributors</h3>
